@@ -106,6 +106,15 @@ int main(int argc, char** argv)
 	if (Skeleton != NULL)
 	{
 		std::printf("BoneCount: %d\n", BoneCount);
+		for (granny_int32x i = 0; i < Skeleton->BoneCount; ++i)
+		{
+			granny_bone* Bone = &Skeleton->Bones[i];
+			std::printf("Bone %d: %s\n", i, Bone->Name);
+			std::printf("Parent Index: %d\n", Bone->ParentIndex);
+			std::printf("Local Transform: %f %f %f\n", Bone->LocalTransform.Position[0], Bone->LocalTransform.Position[1], Bone->LocalTransform.Position[2]);
+			std::printf("Orientation: %f %f %f %f\n", Bone->LocalTransform.Orientation[0], Bone->LocalTransform.Orientation[1], Bone->LocalTransform.Orientation[2], Bone->LocalTransform.Orientation[3]);
+			std::printf("Scale Shear: %f %f %f\n", Bone->LocalTransform.ScaleShear[0][0], Bone->LocalTransform.ScaleShear[0][1], Bone->LocalTransform.ScaleShear[0][2]);
+		}
 	}
 	
 	std::printf("\n\n");
@@ -131,6 +140,10 @@ int main(int argc, char** argv)
 			Positions.resize(GrannyGetMeshVertexCount(Mesh) * 3);
 			GrannyCopyMeshVertices(Mesh, PosType, &Positions[0]);
 		}
+		for (auto it = Positions.begin(); it != Positions.end(); ++it) {
+			std::cout << *it << " ";
+		}
+		std::cout << std::endl;
 		if (GrannyFindMatchingMember(GrannyGetMeshVertexType(Mesh),
 			GrannyGetMeshVertices(Mesh),
 			GrannyVertexNormalName,
